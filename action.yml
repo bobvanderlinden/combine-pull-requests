@@ -1,0 +1,18 @@
+name: 'Combine Pull Requests'
+description: 'Merge multiple pull requests on top of the current revision'
+inputs:
+  label:
+    description: 'The label to look for pull requests'
+    required: false
+    default: 'experiment'
+  repo-token:
+    description: 'The GitHub token'
+    required: true
+    default: 'experiment'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    LABEL: ${{ inputs.label }}
+    GITHUB_TOKEN: ${{ inputs.repo-token }}
+
