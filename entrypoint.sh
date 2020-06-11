@@ -17,7 +17,8 @@ fail()
 REPO="${GITHUB_REPOSITORY##*/}"
 OWNER="${GITHUB_REPOSITORY%/*}"
 
-COMMIT_AUTHOR="${COMMIT_AUTHOR:-nobody <nobody@nobody>}"
+GIT_AUTHOR_NAME="${GIT_AUTHOR_NAME:-nobody}"
+GIT_AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL:-nobody@nobody}"
 
 [ -n "${OWNER}" ] || fail "Could not determine GitHub owner from GITHUB_REPOSITORY."
 [ -n "${REPO}" ] || fail "Could not determine GitHub repo from GITHUB_REPOSITORY."
@@ -62,4 +63,4 @@ readarray -t shas < <(
 
 # Merge all shas together into one commit.
 git merge --no-commit "${shas[@]}"
-git commit --all --author "$COMMIT_AUTHOR" --message "Merged Pull Requests (${shas[*]})"
+git commit --message "Merged Pull Requests (${shas[*]})"
