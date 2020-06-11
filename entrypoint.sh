@@ -17,8 +17,8 @@ fail()
 REPO="${GITHUB_REPOSITORY##*/}"
 OWNER="${GITHUB_REPOSITORY%/*}"
 
-export GIT_AUTHOR_NAME="${GIT_AUTHOR_NAME:-nobody}"
-export GIT_AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL:-nobody@nobody}"
+git config user.name "${GIT_AUTHOR_NAME:-nobody}"
+git config user.email "${GIT_AUTHOR_EMAIL:-nobody@nobody}"
 
 [ -n "${OWNER}" ] || fail "Could not determine GitHub owner from GITHUB_REPOSITORY."
 [ -n "${REPO}" ] || fail "Could not determine GitHub repo from GITHUB_REPOSITORY."
