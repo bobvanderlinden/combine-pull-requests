@@ -2,10 +2,12 @@
 
 A GitHub action that combines multiple labelled pull requests onto the current working copy.
 
-Not sure what to think of this? See [Use case].
+Not sure what to think of this? See [Use case](#Use case).
+
+## Usage
 
 ```yml
-- uses: bobvanderlinden/combine-pull-requests@v1
+- uses: bobvanderlinden/combine-pull-requests@v2
   with:
     label: experiment
     repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -35,13 +37,14 @@ on:
     types: [ opened, labeled, unlabeled ]
 jobs:
   deploy:
-    if: ${{ github.event_name == "push" || github.event.label.name == "experiment" }}
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' || github.event.label.name == 'experiment' }}
     steps:
       - uses: actions/checkout@v2
         with:
           ref: master
           fetch-depth: 0
-      - uses: bobvanderlinden/combine-pull-requests@v1
+      - uses: bobvanderlinden/combine-pull-requests@v2
         with:
           label: experiment
           repo-token: ${{ secrets.GITHUB_TOKEN }}
