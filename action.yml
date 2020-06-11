@@ -13,6 +13,6 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    LABEL: ${{ inputs.label }}
+    PULL_REQUEST_LABEL: ${{ inputs.label }}
     GITHUB_TOKEN: ${{ inputs.repo-token }}
 

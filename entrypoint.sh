@@ -9,7 +9,7 @@ fail()
 }
 
 [ -n "${GITHUB_REPOSITORY}" ] || fail "No GITHUB_REPOSITORY was supplied."
-[ -n "${LABEL}" ] || fail "No LABEL was supplied."
+[ -n "${PULL_REQUEST_LABEL}" ] || fail "No PULL_REQUEST_LABEL was supplied."
 [ -n "${GITHUB_TOKEN}" ] || fail "No GITHUB_TOKEN was supplied."
 
 # Determine https://github.com/OWNER/REPO from GITHUB_REPOSITORY.
@@ -19,7 +19,7 @@ OWNER="${GITHUB_REPOSITORY%/*}"
 [ -n "${OWNER}" ] || fail "Could not determine GitHub owner from GITHUB_REPOSITORY."
 [ -n "${REPO}" ] || fail "Could not determine GitHub repo from GITHUB_REPOSITORY."
 
-# Fetch the SHAs from the pull requests that are marked with $LABEL.
+# Fetch the SHAs from the pull requests that are marked with $PULL_REQUEST_LABEL.
 readarray -t shas < <(
   jq -cn '
     {
@@ -27,22 +27,22 @@ readarray -t shas < <(
       variables: {
         owner: $owner,
         repo: $repo,
-        label: $label
+        pull_request_label: $pull_request_label
       }
     }' \
     --arg query '
-      query($owner: String!, $repo: String!, $label: String!) {
+      query($owner: String!, $repo: String!, $pull_request_label: String!) {
         repository(owner: $owner, name: $repo) {
-          pullRequests(states: OPEN, labels: $label, first: 100) {
+          pullRequests(states: OPEN, labels: $pull_request_label, first: 100) {
             nodes {
               headRefOid
             }
           }
         }
       }' \
-    --arg owner nedap \
-    --arg repo milo-server \
-    --arg label "$LABEL" \
+    --arg owner "$OWNER" \
+    --arg repo "$REPO" \
+    --arg pull_request_label "$PULL_REQUEST_LABEL" \
   | curl \
     --fail \
     --show-error \
