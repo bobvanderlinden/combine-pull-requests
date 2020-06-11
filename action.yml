@@ -5,6 +5,14 @@ inputs:
     description: 'The label to look for pull requests'
     required: false
     default: 'experiment'
+  author-name:
+    description: 'The author name of the merge commit'
+    required: false
+    default: 'nobody'
+  author-email:
+    description: 'The author email of the merge commit'
+    required: false
+    default: 'nobody@nobody'
   repo-token:
     description: 'The GitHub token'
     required: true
@@ -15,4 +23,6 @@ runs:
   env:
     PULL_REQUEST_LABEL: ${{ inputs.label }}
     GITHUB_TOKEN: ${{ inputs.repo-token }}
+    GIT_AUTHOR_NAME: ${{ inputs.author-name }}
+    GIT_AUTHOR_EMAIL: ${{ inputs.author-email }}
 

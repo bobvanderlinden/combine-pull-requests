@@ -17,8 +17,8 @@ fail()
 REPO="${GITHUB_REPOSITORY##*/}"
 OWNER="${GITHUB_REPOSITORY%/*}"
 
-git config user.name "${GIT_AUTHOR_NAME:-nobody}"
-git config user.email "${GIT_AUTHOR_EMAIL:-nobody@nobody}"
+git config user.name "${GIT_AUTHOR_NAME}"
+git config user.email "${GIT_AUTHOR_EMAIL}"
 
 [ -n "${OWNER}" ] || fail "Could not determine GitHub owner from GITHUB_REPOSITORY."
 [ -n "${REPO}" ] || fail "Could not determine GitHub repo from GITHUB_REPOSITORY."
