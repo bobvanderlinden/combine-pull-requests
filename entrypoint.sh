@@ -47,12 +47,10 @@ readarray -t shas < <(
   | curl \
     --fail \
     --show-error \
-    --silent \
     --header "Authorization: token $GITHUB_TOKEN" \
     --header "Content-Type: application/json" \
     --data @- \
-    https://api.github.com/graphql \
-  | jq -r '.data.repository.pullRequests.nodes | .[] | .headRefOid'
+    https://api.github.com/graphql
 )
 
 # Do not attempt to merge if there are no pull requests to be merged.
