@@ -59,8 +59,14 @@ readarray -t shas < <(
 )
 
 # Do not attempt to merge if there are no pull requests to be merged.
-[ ${#shas[@]} -ne 0 ] || exit 0
+if [ ${#shas[@]} -eq 0 ]
+then
+  echo "No pull requests with label $PULL_REQUEST_LABEL"
+  exit 0
+fi
 
 # Merge all shas together into one commit.
 git merge --no-commit "${shas[@]}"
 git commit --message "Merged Pull Requests (${shas[*]})"
+
+echo "Merged ${#shas[@]} pull requests"
