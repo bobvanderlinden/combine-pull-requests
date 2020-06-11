@@ -1,5 +1,8 @@
 name: 'Combine Pull Requests'
-description: 'Merge multiple pull requests on top of the current revision'
+description: 'Combine multiple labelled pull requests by merging them on top of the current branch'
+branding:
+  icon: git-merge
+  color: purple
 inputs:
   label:
     description: 'The label to look for pull requests'
