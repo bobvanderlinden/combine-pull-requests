@@ -34,7 +34,7 @@ readarray -t shas < <(
     --arg query '
       query($owner: String!, $repo: String!, $pull_request_label: String!) {
         repository(owner: $owner, name: $repo) {
-          pullRequests(states: OPEN, labels: $pull_request_label, first: 100) {
+          pullRequests(states: OPEN, labels: [$pull_request_label], first: 100) {
             nodes {
               headRefOid
             }
