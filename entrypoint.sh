@@ -31,7 +31,7 @@ readarray -t shas < <(
       }
     }' \
     --arg query '
-      query($owner: String!, $repo: String!) {
+      query($owner: String!, $repo: String!, $label: String!) {
         repository(owner: $owner, name: $repo) {
           pullRequests(states: OPEN, labels: $label, first: 100) {
             nodes {
