@@ -7,7 +7,7 @@ Not sure what to think of this? See [Use case](#Use case).
 ## Usage
 
 ```yml
-- uses: bobvanderlinden/combine-pull-requests@v3
+- uses: bobvanderlinden/combine-pull-requests@v4
   with:
     label: experiment
     repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -32,9 +32,9 @@ An example GitHub action configuration could be the following:
 name: My App CD
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    types: [ opened, labeled, unlabeled ]
+    types: [opened, labeled, unlabeled]
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -44,7 +44,7 @@ jobs:
         with:
           ref: master
           fetch-depth: 0
-      - uses: bobvanderlinden/combine-pull-requests@v3
+      - uses: bobvanderlinden/combine-pull-requests@v4
         with:
           label: experiment
           repo-token: ${{ secrets.GITHUB_TOKEN }}
