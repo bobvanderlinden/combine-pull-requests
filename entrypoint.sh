@@ -2,8 +2,7 @@
 set -o errexit
 set -o pipefail
 
-fail()
-{
+fail() {
   echo "$@" >&2
   exit 1
 }
@@ -45,26 +44,26 @@ readarray -t shas < <(
       }' \
     --arg owner "$OWNER" \
     --arg repo "$REPO" \
-    --arg pull_request_label "$PULL_REQUEST_LABEL" \
-  | curl \
-    --fail \
-    --show-error \
-    --silent \
-    --header "Authorization: token $GITHUB_TOKEN" \
-    --header "Content-Type: application/json" \
-    --data @- \
-    https://api.github.com/graphql \
-  | jq -r '.data.repository.pullRequests.nodes | .[].headRefOid'
+    --arg pull_request_label "$PULL_REQUEST_LABEL" |
+    curl \
+      --fail \
+      --show-error \
+      --silent \
+      --header "Authorization: token $GITHUB_TOKEN" \
+      --header "Content-Type: application/json" \
+      --data @- \
+      https://api.github.com/graphql |
+    jq -r '.data.repository.pullRequests.nodes | .[].headRefOid'
 )
 
 # Do not attempt to merge if there are no pull requests to be merged.
-if [ ${#shas[@]} -eq 0 ]
-then
+if [ ${#shas[@]} -eq 0 ]; then
   echo "No pull requests with label $PULL_REQUEST_LABEL"
   exit 0
 fi
 
 # Merge all shas together into one commit.
+git fetch origin "${shas[@]}"
 git merge --no-ff --no-commit "${shas[@]}"
 git commit --message "Merged Pull Requests (${shas[*]})"
 
